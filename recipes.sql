@@ -16,7 +16,7 @@ CREATE TABLE ingredients (
   name          TEXT NOT NULL UNIQUE
 );
 
--- instructions (текст шага, переиспользуемый между рецептами)
+-- instructions 
 CREATE TABLE instructions (
   id            BIGSERIAL PRIMARY KEY,
   text          TEXT NOT NULL UNIQUE
@@ -29,7 +29,7 @@ CREATE TABLE recipe_categories (
   PRIMARY KEY (recipe_id, category_id)
 );
 
--- recipe_ingredients (M:N c доп. полями)
+-- recipe_ingredients (M:N)
 CREATE TABLE recipe_ingredients (
   recipe_id       BIGINT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
   ingredient_id   BIGINT NOT NULL REFERENCES ingredients(id) ON DELETE RESTRICT,
@@ -38,7 +38,7 @@ CREATE TABLE recipe_ingredients (
   PRIMARY KEY (recipe_id, ingredient_id)
 );
 
--- recipe_instructions (M:N с порядком; шаги переиспользуются)
+-- recipe_instructions (M:N)
 CREATE TABLE recipe_instructions (
   recipe_id        BIGINT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
   instruction_id   BIGINT NOT NULL REFERENCES instructions(id) ON DELETE RESTRICT,
@@ -48,7 +48,7 @@ CREATE TABLE recipe_instructions (
   UNIQUE (recipe_id, step_number)
 );
 
--- индексы для частых выборок
+-- index
 CREATE INDEX idx_recipes_name        ON recipes(name);
 CREATE INDEX idx_categories_name     ON categories(name);
 CREATE INDEX idx_ingredients_name    ON ingredients(name);
