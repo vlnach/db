@@ -1,4 +1,4 @@
--- recipes
+-- recipess
 CREATE TABLE recipes (
   id   BIGSERIAL PRIMARY KEY,
   name TEXT NOT NULL UNIQUE
